@@ -1,0 +1,54 @@
+Class: Globals
+
+Attributes:
+    prompts : List<string>
+    rng     : Random
+
+Methods:
+    GetValidFilepath()
+    IsValidFilepath()
+    GetUserConfirmation()
+
+======================================
+
+Class: Program
+
+Attribute:
+    _journal : Journal
+
+Methods:
+    Main()
+    DisplayMainMenu()
+
+======================================
+
+Class: Journal
+
+Attributes:
+    _contents           : List<Entry>
+    _filepath           : string
+    _unsaved_data_exists: bool
+
+Methods:
+    AddEntryRandom()
+    Save()
+    CheckUnsavedData()
+    Display()
+    Serialize()
+    LoadFromSerializedString()
+
+======================================
+
+Class: Entry
+
+Attributes:
+    _entry  : string
+    _date   : string
+    _prompt : string
+
+Methods:
+    Entry()
+    GetFromUser()
+    Display()
+    Serialize()
+    LoadFromSerializedString()
