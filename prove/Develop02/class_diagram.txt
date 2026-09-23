@@ -1,8 +1,8 @@
 Class: Globals
 
 Attributes:
-    prompts : List<string>
-    rng     : Random
+    _prompts : List<string>
+    _rng     : Random
 
 Methods:
     GetValidFilepath()
