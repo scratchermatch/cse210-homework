@@ -1,5 +1,3 @@
-using System;
-
 // Genuinely useless class. This could all not exist and I would literally
 // just pass 3 arguments to a different class.
 //
@@ -10,6 +8,8 @@ using System;
 // 30 lines of boilerplate, zero proven benefit.
 //
 // THIS IS LITERALLY JUST AIR AND FLUFF.
+
+using System;
 
 public class Reference {
 	private string _book;
