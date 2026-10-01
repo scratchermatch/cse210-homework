@@ -47,7 +47,7 @@ class Program {
 				Console.Clear();
 				Console.WriteLine(scripture.ToString());
 				Console.ReadLine(); // Not even I'm sure how it works
-				System.Environment.Exit(1);
+				System.Environment.Exit(1); // (thats not true I said it for dramatic effect)
 			}
 		}
 	}
