@@ -1,13 +1,9 @@
 using System;
 
 public class Scripture {
-	// I think that the idea of having a whole separate word class is a bad
-	// design choice that leads to a bunch of unnecessary bloat inside the
-	// Scripture class.
+	private const int _MIN_HIDDEN_WORDS = 5;
+	private const int _MAX_HIDDEN_WORDS = 20;
 
-	private const int _MIN_HIDDEN_WORDS = 5; // minimum words to be hidden per op
-	private const int _MAX_HIDDEN_WORDS = 20; // max to be hidden per op
-	
 	private string _original_text;
 	private List<Word> _words = new(); // never changes
 	private List<Word> _visible_words = new(); // reference removed when hidden

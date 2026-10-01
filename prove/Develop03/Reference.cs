@@ -1,10 +1,10 @@
-// Genuinely useless class. This could all not exist and I would literally
+// Genuinely useless class. This could all not exist and I would
 // just pass 3 arguments to a different class.
 //
 // INSTEAD, ONLY FOR GRADING PURPOSES:
 // Write a bunch of mandated private attributes
 // Write a bunch of boilerplate constructors
-// Write a bunch of getters that literally just return the private variable
+// Write a bunch of getters that literally just return the variables
 // 30 lines of boilerplate, zero proven benefit.
 //
 // THIS IS LITERALLY JUST AIR AND FLUFF.
