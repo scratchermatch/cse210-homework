@@ -1,3 +1,20 @@
+/* Mindfulness Program - Alexander Hearn
+ * All code is dedicated to the public domain under CC0
+ *
+ * Quite basic program, could be significantly cleaner if not subjected to the manifold
+ * shackles of OOP. I was able to clean up most of the bloat by throwing together a clean
+ * template inside of StartActivity in Activity.cs which allows all activities to be
+ * called with empty constructors, and only need to override one abstract function.
+ *
+ * Creativity is shown by avoiding repeats in reflection activity as previously mentioned,
+ * and handling various menu entries as shown below. Not much else stands out except for the
+ * particularly clean spinner code in Activity.cs and the aforementioned template inside
+ * StartActivity.
+ *
+ * Program is generally stable, could probably crash it with some integer overflows in the
+ * wait time, or "softlock" it by entering a very large integer to wait in seconds.
+ */
+
 using System;
 
 // Look how pretty and clean this is.
