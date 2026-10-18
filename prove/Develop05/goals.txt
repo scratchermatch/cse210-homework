@@ -1,0 +1,1 @@
+single|simple|1 time|50|True~inf|infinite|infinity|50|False~multi|multi|5 times|50|0|500|True~score|1150
