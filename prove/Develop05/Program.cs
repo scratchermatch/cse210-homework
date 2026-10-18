@@ -1,3 +1,44 @@
+/* Goal Program - Alexander Hearn
+ * All code is available under CC0
+ *
+ * This was a very infuriating program to write. Being forced to use an
+ * abstraction layer greatly hurt the code quality, and more than once I was
+ * forced to make extremely poor design decisions in order to mitigate this.
+ *
+ * For example, all of the goals would've like to implement a check to make
+ * sure they aren't getting marked complete after they are already complete.
+ * I would have liked to implement a virtual function to provide this base
+ * functionality and then continue to force children to override it.
+ *
+ * This is NOT possible in C#, as a fundamental language limitation.
+ *
+ * Instead of creating an excessive amount of boilerplate to build an entire
+ * template around this and rewrite 3 derived classes, I chose to duplicate
+ * code, which, ironically, actually meant I wrote less code than if I had
+ * done the idiomatically correct thing.
+ *
+ * Inheritance is riddled with problems like these. I would have greatly
+ * preferred to have a single base goal class that implements all of these
+ * using a single algorithm for calculating points. It would have been
+ * immensely cleaner, and approximately half the size. Additionally, it would
+ * have saved an enourmous amount of space in Program.cs.
+ *
+ * Instead, I wrote several disturbing files and duplicated a hundred lines of
+ * boilerplate to avoid rewriting one function. This whole concept and
+ * language just keeps making me laugh.
+ *
+ * People actually use this. That scares me. This worries me about the future
+ * of programmers and programming.
+ *
+ * -----------------------------------------------------------------------
+ *
+ * Showing creativity for the extra percent points:
+ * - Clean CLI allows multiple idioms
+ * - Use of both virtual and abstract methods to prove I know what I'm doing
+ * - Robust file reading that prevents the vast majority of errors caused
+ *   by malformed data
+ */
+
 using System;
 using System.IO;
 
