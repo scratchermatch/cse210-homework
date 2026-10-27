@@ -16,7 +16,7 @@ public class Process {
 		_callback = callback;
 	}
 	
-	// Returns true if processed is finished after delta processing time
+	// Returns true if process is finished after delta processing time
 	public bool Execute(double delta) {
 		_progress += delta;
 		if (_progress >= _cpu_burst) {
@@ -26,4 +26,10 @@ public class Process {
 		}
 		return false;
 	}
+
+	public int GetMem() { return _memory; }
+	
+	public double GetBurst() { return _cpu_burst; }
+
+	public int GetID() { return _id; }
 }
