@@ -18,43 +18,151 @@
  * TYPE OF PROGRAM. Thank you.
  */
 
+
 public class SimulationGenerator {
-	// A simple workload containing 3 processes with increasing
-	// memory and decreasing cpu burst lengths
+	// increasing memory, decreasing CPU burst.
 	public static List<Process> GetWorkloadOne() {
 		var workload = new List<Process>();
 
 		for (int i = 0; i < 3; i++) {
-			int pid = i + 1; // Very bizzare lambda capture behavior
-			// If I were to just use i instead of a local here, the lambda
-			// would keep i in scope, and since i is changing, all processes
-			// would have id 3. Which is kind of insane.
-			workload.Add(new Process(pid, 10 * (i + 1), 10 * (3 - i), () => { Console.WriteLine($"Process {pid} Finished"); }));
+			int pid = i + 1;
+			workload.Add(new Process(
+				pid,
+				10 * (i + 1),
+				2 * (3 - i),
+				() => Console.WriteLine($"Process {pid} Finished")
+			));
 		}
 
 		return workload;
 	}
-	
-	// A singular regular speed core
+
+	// A long process followed by three short processes.
+	// For demonstrating the convoy effect in FCFS.
+	public static List<Process> GetWorkloadConvoy() {
+		var workload = new List<Process>();
+
+		workload.Add(new Process(1, 40, 10,
+			() => Console.WriteLine("Process 1 Finished (long job)")));
+
+		workload.Add(new Process(2, 10, 1,
+			() => Console.WriteLine("Process 2 Finished (short job)")));
+
+		workload.Add(new Process(3, 10, 1,
+			() => Console.WriteLine("Process 3 Finished (short job)")));
+
+		workload.Add(new Process(4, 10, 1,
+			() => Console.WriteLine("Process 4 Finished (short job)")));
+
+		return workload;
+	}
+
+	// Different burst lengths, deliberately not sorted.
+	// SJF should finish P2, P4, P3, P1.
+	public static List<Process> GetWorkloadExpectedOrder() {
+		var workload = new List<Process>();
+
+		workload.Add(new Process(1, 20, 4,
+			() => Console.WriteLine("Process 1 Finished (burst 4)")));
+
+		workload.Add(new Process(2, 20, 1,
+			() => Console.WriteLine("Process 2 Finished (burst 1)")));
+
+		workload.Add(new Process(3, 20, 3,
+			() => Console.WriteLine("Process 3 Finished (burst 3)")));
+
+		workload.Add(new Process(4, 20, 2,
+			() => Console.WriteLine("Process 4 Finished (burst 2)")));
+
+		return workload;
+	}
+
+	// Useful for checking that RR gives each process CPU time.
+	// Expected completion order: P2, P3, P1.
+	public static List<Process> GetWorkloadRoundRobin() {
+		var workload = new List<Process>();
+
+		workload.Add(new Process(1, 20, 3,
+			() => Console.WriteLine("Process 1 Finished (burst 3)")));
+
+		workload.Add(new Process(2, 20, 1,
+			() => Console.WriteLine("Process 2 Finished (burst 1)")));
+
+		workload.Add(new Process(3, 20, 2,
+			() => Console.WriteLine("Process 3 Finished (burst 2)")));
+
+		return workload;
+	}
+
+	// A singular regular-speed core.
 	public static List<Core> GetCoreListOne() {
-		var core = new Core(1, 1);
 		var cores = new List<Core>();
-		cores.Add(core);
+		cores.Add(new Core(1, 1, 0.1));
 		return cores;
 	}
-	
-	// A simple simulation to validate that the program functions
-	public static Simulation GetSimulationOne() {
-		var workload = GetWorkloadOne();
+
+	private static Simulation CreateSimulation(List<Process> workload, Scheduler.Policy policy) {
 		var cores = GetCoreListOne();
 		var memory_manager = new MemoryManager(1000);
 
-		var scheduler = new Scheduler(cores, workload, memory_manager, Scheduler.Policy.SJF_NM);
-		
-		double delta = 1.0;
+		var scheduler = new Scheduler(
+			cores,
+			workload,
+			memory_manager,
+			policy
+		);
 
-		var sim = new Simulation(workload, cores, scheduler, memory_manager, delta);
-		
-		return sim;
+		double delta = 0.01;
+
+		return new Simulation(cores, scheduler, delta);
+	}
+
+	// Basic proof of concept simulation (mostly for testing)
+	public static Simulation TestSim() {
+		return CreateSimulation(
+			GetWorkloadOne(),
+			Scheduler.Policy.RR_NM
+		);
+	}
+
+	// Convoy effect with FCFS.
+	public static Simulation ConvoyFCFS() {
+		return CreateSimulation(
+			GetWorkloadConvoy(),
+			Scheduler.Policy.FCFS_NM
+		);
+	}
+
+	// Same workload, different policy, for comparison
+	public static Simulation ConvoySJF() {
+		return CreateSimulation(
+			GetWorkloadConvoy(),
+			Scheduler.Policy.SJF_NM
+		);
+	}
+
+	// Check SJF's expected completion order.
+	public static Simulation ExpectedOrderSJF() {
+		return CreateSimulation(
+			GetWorkloadExpectedOrder(),
+			Scheduler.Policy.SJF_NM
+		);
+	}
+
+	// Compare against FCFS using the same burst lengths.
+	public static Simulation ExpectedOrderFCFS() {
+		return CreateSimulation(
+			GetWorkloadExpectedOrder(),
+			Scheduler.Policy.FCFS_NM
+		);
+	}
+
+	// Test round-robin time slicing and completion order
+	public static Simulation RoundRobin() {
+		return CreateSimulation(
+			GetWorkloadRoundRobin(),
+			Scheduler.Policy.RR_NM
+		);
 	}
 }
+

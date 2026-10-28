@@ -1,17 +1,15 @@
 public class Simulation {
-	private List<Process> _workload;
 	private List<Core> _cores;
 	private Scheduler _scheduler;
-	private MemoryManager _memory_manager;
+	// Time step passed into participants
 	private double _delta_time;
+	// Total cumulative time sim has been running
+	private double _sim_delta = 0.0;
 
-	public Simulation(List<Process> workload, List<Core> cores,
-			Scheduler scheduler, MemoryManager memory_manager,
+	public Simulation(List<Core> cores, Scheduler scheduler,
 			double delta_time) {
-		_workload = workload;
 		_cores = cores;
 		_scheduler = scheduler;
-		_memory_manager = memory_manager;
 		_delta_time = delta_time;
 	}
 	
@@ -30,6 +28,14 @@ public class Simulation {
 			foreach (Core c in _cores) {
 				c.Process(_delta_time);
 			}
+
+			// Update sim delta last
+			// This is because participants calc delta from requested value
+			// plus the delta they received
+			_sim_delta += _delta_time;
+
 		}
 	}
+
+	public double GetSimDelta() { return _sim_delta; }
 }

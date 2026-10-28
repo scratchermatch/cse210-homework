@@ -37,11 +37,17 @@ public class MemoryManager {
 	public bool FreeProc(Process proc) {
 		int pid = proc.GetID();
 		int mem = proc.GetMem();
+		_used_mem -= mem;
 		return _allocated_procs.Remove(pid);
 	}
 	
 	// Using Alloc will return false if not enough memory, don't use this
 	private int GetAvailableMemory() {
 		return _total_mem - _used_mem;
+	}
+
+	public bool ProcInMem(Process proc) {
+		int pid = proc.GetID();
+		return _allocated_procs.Contains(pid);
 	}
 }

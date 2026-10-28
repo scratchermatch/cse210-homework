@@ -6,7 +6,7 @@ public class Process {
 	private double _cpu_burst; // anticipated cpu burst length for this process
 	// consider cpu burst as max progress
 	private double _progress; // consider this as current progress 
-	
+
 	public Action _callback; // function to call upon completion
 
 	public Process(int id, int memory, int cpu_burst, Action callback) {
@@ -32,4 +32,6 @@ public class Process {
 	public double GetBurst() { return _cpu_burst; }
 
 	public int GetID() { return _id; }
+
+	public bool IsComplete() { return _progress == _cpu_burst; }
 }
